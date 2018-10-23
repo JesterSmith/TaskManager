@@ -18,6 +18,7 @@ We ask that your application fulfill the following user 3 stories:
   -Completed. Added feature to create new To Do list as well. Homepage update to link to all tasks.
 
  -As a user, I want to be able to prioritize tasks
+  -Completed. Added feature for priority sorting of ToDo List
 
  -As a user, I want to be able to leave descriptions, subtasks, and due dates for tasks
 
