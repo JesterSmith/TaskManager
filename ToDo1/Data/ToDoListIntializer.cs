@@ -31,10 +31,14 @@ namespace ToDo1.Data
             {
                 new Task("Get Out Shovels", "Need to get shovels from shed"),
                 new Task("Get ice melt", "Need to get ice melt from store"),
+                new Task("Get mower cleaned", "get mower prep done for winter/run dry")
             };
 
-            tasks[0].DueDate = new DateTime(2018, 10, 25);
-            tasks[1].DueDate = new DateTime(2018, 10, 26);
+            tasks1[0].DueDate = new DateTime(2018, 10, 25);
+            tasks1[1].DueDate = new DateTime(2018, 10, 26);
+            tasks1[2].DueDate = new DateTime(2018, 10, 23);
+
+            tasks1.ForEach(x => data.Tasks.Add(x));
 
             var todoList1 = new ToDoList();
             todoList1.Title = "Winter Prep";

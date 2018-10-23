@@ -18,7 +18,10 @@ namespace ToDo1.Models
 
         public void AddMany(IList<Task> tasks)
         {
-
+            foreach(var x in tasks)
+            {
+                Tasks.Add(x);
+            }
         }
     }
 }

@@ -28,4 +28,6 @@ Add a user story of your own:
 Implement a feature you’d find useful for managing tasks
 This is the one work sample we will be using to gauge your skills. We’re looking for depth of knowledge, creativity, and passion. The requirements are simple at a base level, but we want you to blow us away!
 
+-Added a feature to the homepage that will show any task taht is due today.
+
 

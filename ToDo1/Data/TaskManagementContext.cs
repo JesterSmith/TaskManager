@@ -12,8 +12,8 @@ namespace ToDo1.Data
     {
         public TaskManagementContext() : base("TaskManagementData")
         {
+
             Database.SetInitializer<TaskManagementContext>(new DropCreateDatabaseIfModelChanges<TaskManagementContext>());
-            var iscopy = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
         }
 
         public DbSet<Task> Tasks { get; set; }

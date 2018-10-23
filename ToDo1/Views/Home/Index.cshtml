@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<ToDo1.Models.Task>
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -20,6 +21,18 @@
         <h2>Tasks</h2>
         <p>
             View All Tasks @Html.ActionLink("Here", "Index", "Task")
+        </p>
+
+    </div>
+
+    <div class="col-md-4">
+        <h2>Due Today</h2>
+        <p>
+            Task(s) Due Today :
+            @foreach(var x in Model)
+            {
+                <div>-- @x.Title</div>
+            }
         </p>
 
     </div>
