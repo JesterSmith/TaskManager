@@ -11,111 +11,112 @@ using ToDo1.Models;
 
 namespace ToDo1.Controllers
 {
-    public class ToDoListController : Controller
+    public class TaskController : Controller
     {
         private TaskManagementContext db = new TaskManagementContext();
 
-        // GET: ToDoList
+        // GET: Task
         public ActionResult Index()
         {
-            return View(db.ToDoLists.ToList());
+            var tasks = db.Tasks.Include(t => t.SubTasks);
+            return View(tasks.ToList());
         }
 
-        // GET: ToDoList/Details/5
+        // GET: Task/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ToDoList toDoList = db.ToDoLists.Find(id);
-            if (toDoList == null)
+            Task task = db.Tasks.Find(id);
+            if (task == null)
             {
                 return HttpNotFound();
             }
-            toDoList.Tasks = new List<Task>();
-
-            toDoList.Tasks = (from task in db.Tasks where task.ToDoListID == id select task).ToList();
-
-            return View(toDoList);
+            return View(task);
         }
 
-        // GET: ToDoList/Create
+        // GET: Task/Create
         public ActionResult Create()
         {
+            ViewBag.ToDoListID = new SelectList(db.ToDoLists, "ID", "Title");
             return View();
         }
 
-        // POST: ToDoList/Create
+        // POST: Task/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title")] ToDoList toDoList)
+        public ActionResult Create([Bind(Include = "ID,Title,Description,Priority,Status,DueDate,ToDoListID")] Task task)
         {
             if (ModelState.IsValid)
             {
-                db.ToDoLists.Add(toDoList);
+                db.Tasks.Add(task);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(toDoList);
+            ViewBag.ToDoListID = new SelectList(db.ToDoLists, "ID", "Title", task.ToDoListID);
+            return View(task);
         }
 
-        // GET: ToDoList/Edit/5
+        // GET: Task/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ToDoList toDoList = db.ToDoLists.Find(id);
-            if (toDoList == null)
+            Task task = db.Tasks.Find(id);
+            if (task == null)
             {
                 return HttpNotFound();
             }
-            return View(toDoList);
+            ViewBag.ToDoListID = new SelectList(db.ToDoLists, "ID", "Title", task.ToDoListID);
+            return View(task);
         }
 
-        // POST: ToDoList/Edit/5
+        // POST: Task/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID")] ToDoList toDoList)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,Priority,Status,DueDate,ToDoListID")] Task task)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(toDoList).State = EntityState.Modified;
+                db.Entry(task).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(toDoList);
+            ViewBag.ToDoListID = new SelectList(db.ToDoLists, "ID", "Title", task.ToDoListID);
+            return View(task);
         }
 
-        // GET: ToDoList/Delete/5
+        // GET: Task/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ToDoList toDoList = db.ToDoLists.Find(id);
-            if (toDoList == null)
+            Task task = db.Tasks.Find(id);
+            if (task == null)
             {
                 return HttpNotFound();
             }
-            return View(toDoList);
+            return View(task);
         }
 
-        // POST: ToDoList/Delete/5
+        // POST: Task/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ToDoList toDoList = db.ToDoLists.Find(id);
-            db.ToDoLists.Remove(toDoList);
+            Task task = db.Tasks.Find(id);
+            db.Tasks.Remove(task);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

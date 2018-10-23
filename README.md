@@ -15,6 +15,7 @@ Here are the requirements!
 We ask that your application fulfill the following user 3 stories: 
 
  -As a user, I want to manage tasks and update each task’s progress
+  -Completed. Added feature to create new To Do list as well. Homepage update to link to all tasks.
 
  -As a user, I want to be able to prioritize tasks
 
