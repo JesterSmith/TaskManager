@@ -35,7 +35,7 @@ namespace ToDo1.Controllers
             }
             toDoList.Tasks = new List<Task>();
 
-            toDoList.Tasks = (from task in db.Tasks where task.ToDoListID == id select task).ToList();
+            toDoList.Tasks = (from task in db.Tasks where task.ToDoListID == id select task).OrderBy(x => x.Priority).ToList();
 
             return View(toDoList);
         }
@@ -83,7 +83,7 @@ namespace ToDo1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID")] ToDoList toDoList)
+        public ActionResult Edit([Bind(Include = "ID,Title")] ToDoList toDoList)
         {
             if (ModelState.IsValid)
             {
@@ -116,6 +116,50 @@ namespace ToDo1.Controllers
         {
             ToDoList toDoList = db.ToDoLists.Find(id);
             db.ToDoLists.Remove(toDoList);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: ToDoList/Priority/5
+        public ActionResult Priority(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ToDoList toDoList = db.ToDoLists.Find(id);
+            if (toDoList == null)
+            {
+                return HttpNotFound();
+            }
+
+            toDoList.Tasks = new List<Task>();
+
+            toDoList.Tasks = (from task in db.Tasks where task.ToDoListID == id select task).OrderBy(x => x.Priority).ToList();
+            return View(toDoList);
+        }
+
+        // POST: ToDoList/Priority/5
+        [HttpPost, ActionName("Priority")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Priority(int id)
+        {
+            ToDoList toDoList = db.ToDoLists.Find(id);
+
+            toDoList.Tasks = new List<Task>();
+
+            toDoList.Tasks = (from task in db.Tasks where task.ToDoListID == id select task).ToList();
+            List<int> ids = Request.Form["curItem.ID"].Split(',').Select(int.Parse).ToList();
+            List<int> priorities = Request.Form["curItem.Priority"].Split(',').Select(int.Parse).ToList();
+
+            for (int i = 0; i < ids.Count(); i++)
+            {
+                Task task = toDoList.Tasks.Where(x => x.ID == ids[i]).FirstOrDefault();
+
+                task.Priority = priorities[i];
+                db.Entry(task).State = EntityState.Modified;
+            }
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

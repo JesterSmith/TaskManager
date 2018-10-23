@@ -31,3 +31,7 @@ textarea {
     font-weight: bold;
     padding-bottom: 15px;
 }
+.form-row {
+    padding: 10px 5px 0px;
+    border-bottom: 1px solid black;
+}

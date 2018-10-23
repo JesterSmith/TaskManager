@@ -1,0 +1,56 @@
+﻿@model ToDo1.Models.ToDoList
+@{
+    ViewBag.Title = "Priority";
+}
+
+<h2>Set Priority</h2>
+
+<div>
+    <h4>To Do List - @Model.Title</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @foreach (var curItem in Model.Tasks)
+    {
+        <div class="form-row">
+            @Html.HiddenFor(x => curItem.ID)
+
+            <div class="form-group">
+                @Html.LabelFor(x => curItem.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(x => curItem.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => curItem.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(x => curItem.Priority, new { htmlAttributes = new { @class = "form-control", @id = curItem.ID } })
+                    @Html.ValidationMessageFor(x => curItem.Priority, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+

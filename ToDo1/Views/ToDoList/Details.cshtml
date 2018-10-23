@@ -44,10 +44,11 @@
         <div class="col-md-2">
             @Html.ActionLink("Edit", "Edit", "Task", new {id = item.ID }, new { id = item.ID + "-link"})
         </div>
+        
     </div>
 }
 
 <p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |*@
+    @Html.ActionLink("Set List Priority", "Priority", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
