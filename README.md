@@ -20,6 +20,8 @@ We ask that your application fulfill the following user 3 stories:
  -As a user, I want to be able to prioritize tasks
 
  -As a user, I want to be able to leave descriptions, subtasks, and due dates for tasks
+ 
+  -Completed. Added view for subtasks of a given task as well
 
 Add a user story of your own:
 Implement a feature you’d find useful for managing tasks

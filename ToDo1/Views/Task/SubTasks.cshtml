@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ToDo1.Models.Task>
+@{
+    ViewBag.Title = "SubTasks";
+}
+
+<h2>SubTasks</h2>
+<p>
+    @Html.ActionLink("Tasks", "Index")
+</p>
+<div class="row row-header">
+    <div class="col-md-3">
+        @Html.DisplayNameFor(x => x.Title)
+    </div>
+    <div class="col-md-6">
+        @Html.DisplayNameFor(x => x.Description)
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="row btm-bdr">
+        <div class="col-md-3">
+            @Html.DisplayFor(x => item.Title)
+        </div>
+        <div class="col-md-6">
+            @Html.DisplayFor(x => item.Description)
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+}

@@ -12,9 +12,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SubTasks.Title)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
@@ -27,16 +24,16 @@
             @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DueDate)
+            @Html.DisplayNameFor(model => model.DueDate))
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
+        if (item.ParentTaskID == 0)
+        {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubTasks.Title)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
@@ -53,11 +50,23 @@
             @Html.DisplayFor(modelItem => item.DueDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
+        <td>
+            @Html.ActionLink("Add SubTask", "SubTask", new { id = item.ID })
+        </td>
+        @if (Model.Where(x => x.ParentTaskID == item.ID).ToList().Count() > 0)
+        {
+            <td>
+            @Html.ActionLink("View SubTask", "SubTasks", new { id = item.ID })
+
+            </td>
+        }
     </tr>
-}
+        }
+
+    }
 
 </table>
