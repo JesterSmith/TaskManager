@@ -1,0 +1,47 @@
+﻿@model ToDo1.Models.ToDoList
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>To Do List - @Model.Title</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
+
+
+<div># of Tasks: @Model.Tasks.Count</div>
+<div class="row row-header">
+    <div class="col-md-2">
+        Title
+    </div>
+    <div class="col-md-8">
+        Description
+    </div>
+    <div class="col-md-2">
+        Status
+    </div>
+</div>
+
+@foreach (var item in Model.Tasks)
+{
+    <div class="row btm-bdr">
+        <div class="col-md-2">
+            @item.Title
+        </div>
+        <div class="col-md-8">
+            @item.Description
+        </div>
+        <div class="col-md-2">
+            @item.Status
+        </div>
+    </div>
+}
+
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>
