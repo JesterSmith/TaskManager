@@ -14,7 +14,7 @@ namespace ToDo1.Data
         {
             var tasks = new List<Task>
             {
-                new Task("Get Food", "Need to got to the store to get some food and water"),
+                new Task("Get Food", "Need to go to the store to get some food and water"),
                 new Task("Clean up yard", "Rake leaves, clean up dog stuff, clean up kids stuff"),
                 new Task("Mow Lawn", "Bag lawn clippings for mulch"),
                 new Task("Clean up shed", "Reorganize shed and get summer stuff in storage"),
@@ -27,7 +27,23 @@ namespace ToDo1.Data
             todoList.Title = "Around the House";
             todoList.AddMany(tasks);
 
+            var tasks1 = new List<Task>
+            {
+                new Task("Get Out Shovels", "Need to get shovels from shed"),
+                new Task("Get ice melt", "Need to get ice melt from store"),
+            };
+
+            tasks[0].DueDate = new DateTime(2018, 10, 25);
+            tasks[1].DueDate = new DateTime(2018, 10, 26);
+
+            var todoList1 = new ToDoList();
+            todoList1.Title = "Winter Prep";
+            todoList1.AddMany(tasks1);
+
+
+
             data.ToDoLists.Add(todoList);
+            data.ToDoLists.Add(todoList1);
             data.SaveChanges();
         }
     }
