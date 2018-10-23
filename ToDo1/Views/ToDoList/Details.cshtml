@@ -31,10 +31,32 @@
 
 @foreach (var item in Model.Tasks)
 {
-    <div class="row btm-bdr">
-        <div class="col-md-2">
-            @item.Title
+    if (item.ParentTaskID == 0)
+    {
+        <div class="row btm-bdr">
+            <div class="col-md-2">
+                @item.Title
+            </div>
+            <div class="col-md-6">
+                @item.Description
+            </div>
+            <div class="col-md-1">
+                @item.Status
+            </div>
+            <div class="col-md-1">
+                @Html.ActionLink("Edit", "Edit", "Task", new { id = item.ID }, new { id = item.ID + "-link" })
+            </div>
+            <div class="col-md-1">
+                @Html.ActionLink("Add SubTask", "SubTask", "Task", new { id = item.ID }, new { id = item.ID + "-subtask" })
+            </div>
+            @if (Model.Tasks.Where(x => x.ParentTaskID == item.ID).ToList().Count() > 0)
+            {
+                <div class="col-md-1">
+                    @Html.ActionLink("SubTasks", "SubTasks", "Task", new { id = item.ID }, new { id = item.ID + "-subtask" })
+                </div>
+            }
         </div>
+<<<<<<< HEAD
         <div class="col-md-6">
             @item.Description
         </div>
@@ -46,6 +68,9 @@
         </div>
         
     </div>
+=======
+    }
+>>>>>>> Feature/DescDateSubTask
 }
 
 <p>

@@ -18,7 +18,8 @@ namespace ToDo1.Controllers
         // GET: Task
         public ActionResult Index()
         {
-            var tasks = db.Tasks.Include(t => t.SubTasks);
+            var tasks = db.Tasks;
+            tasks.OrderBy(x => x.ID).OrderBy(x => x.ParentTaskID);
             return View(tasks.ToList());
         }
 
@@ -88,11 +89,49 @@ namespace ToDo1.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(task).State = EntityState.Modified;
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.ToDoListID = new SelectList(db.ToDoLists, "ID", "Title", task.ToDoListID);
             return View(task);
+        }
+
+        // GET: Task/SubTask/5
+        public ActionResult SubTask(int id)
+        {
+            ToDo1.Models.Task sTask = new Task();
+
+            sTask.ParentTaskID = id;
+            sTask.ToDoListID = db.Tasks.Where(x => x.ID == id).Select(x => x.ToDoListID).FirstOrDefault();
+            
+
+
+            return View(sTask);
+        }
+
+        // POST: Task/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubTask([Bind(Include = "ID,Title,Description,ToDoListID,ParentTaskID")] Task task)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Tasks.Add(task);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            //ViewBag.ToDoListID = new SelectList(db.ToDoLists, "ID", "Title", task.ToDoListID);
+            return View(task);
+        }
+
+        // GET: Task/SubTasks/5
+        public ActionResult SubTasks(int id)
+        {
+            return View(db.Tasks.Where(x => x.ParentTaskID == id).ToList());
         }
 
         // GET: Task/Delete/5
